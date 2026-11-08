@@ -1,36 +1,114 @@
--- // PLATAFORMAS MÁGICAS
-local LP = game:GetService("Players").LocalPlayer
+-- CRIADOR DE PLATAFORMAS MÁGICAS - ESCADA ROXA
+local Players = game:GetService("Players")
+local LP = Players.LocalPlayer
 local UIS = game:GetService("UserInputService")
 local RunService = game:GetService("RunService")
-local WS = workspace
+local WS = game:GetService("Workspace")
+
+-- Configurações
 local ativo = false
-local plats = {}
-local gui = Instance.new("ScreenGui", game.CoreGui)
-local botao = Instance.new("TextButton", gui)
-botao.Size = UDim2.new(0, 65, 0, 65); botao.Position = UDim2.new(0, 100, 0, 100)
-botao.BackgroundColor3 = Color3.fromRGB(120, 0, 200); botao.TextColor3 = Color3.new(1,1,1)
-botao.Text = "SUBIR\nOFF"; botao.Font = Enum.Font.GothamBold; botao.TextScaled = true
+local plataformas = {}
+local MAX_PLATAFORMAS = 5
+local intervalo_criacao = 0.05
+
+-- Interface
+local gui = Instance.new("ScreenGui", game:GetService("CoreGui"))
+gui.Name = "PlataformasMagicas"
+
+-- Container invisível (área de arrasto maior)
+local container = Instance.new("Frame", gui)
+container.Size = UDim2.new(0, 100, 0, 100)  -- Área de toque expandida
+container.Position = UDim2.new(0, 100, 0, 100)
+container.BackgroundTransparency = 1  -- Totalmente invisível
+container.Active = true
+container.Name = "DragContainer"
+
+-- Botão roxo (centralizado dentro do container)
+local botao = Instance.new("TextButton", container)
+botao.Size = UDim2.new(0, 65, 0, 65)
+botao.Position = UDim2.new(0.5, -32.5, 0.5, -32.5) -- Centralizado no container
+botao.BackgroundColor3 = Color3.fromRGB(120, 0, 200)
+botao.TextColor3 = Color3.fromRGB(255, 255, 255)
+botao.Text = "SUBIR\nOFF"
+botao.Font = Enum.Font.GothamBold
+botao.TextSize = 13
+botao.TextScaled = true
 Instance.new("UICorner", botao).CornerRadius = UDim.new(1, 0)
-local drag, ds, sp
-botao.InputBegan:Connect(function(i) if i.UserInputType == Enum.UserInputType.MouseButton1 or i.UserInputType == Enum.UserInputType.Touch then drag = true; ds = i.Position; sp = botao.Position end end)
-UIS.InputChanged:Connect(function(i) if drag and (i.UserInputType == Enum.UserInputType.MouseMovement or i.UserInputType == Enum.UserInputType.Touch) then local d = i.Position - ds; botao.Position = UDim2.new(sp.X.Scale, sp.X.Offset + d.X, sp.Y.Scale, sp.Y.Offset + d.Y) end end)
-UIS.InputEnded:Connect(function() drag = false end)
-botao.MouseButton1Click:Connect(function()
-    ativo = not ativo
-    botao.Text = "SUBIR\n" .. (ativo and "ON" or "OFF")
-    botao.BackgroundColor3 = ativo and Color3.fromRGB(180,0,255) or Color3.fromRGB(120,0,200)
-end)
-RunService.Heartbeat:Connect(function()
-    if ativo then
-        local char = LP.Character
-        local root = char and char:FindFirstChild("HumanoidRootPart")
-        if root then
-            local p = Instance.new("Part")
-            p.Size = Vector3.new(5, 0.5, 5); p.Anchored = true; p.CanCollide = true
-            p.BrickColor = BrickColor.new("Deep purple"); p.Material = Enum.Material.Neon; p.Transparency = 0.2
-            p.Position = root.Position - Vector3.new(0, 3, 0); p.Parent = WS
-            table.insert(plats, p)
-            while #plats > 5 do local old = table.remove(plats, 1); if old then old:Destroy() end end
-        end
+Instance.new("UIStroke", botao).Color = Color3.fromRGB(200, 100, 255)
+Instance.new("UIStroke", botao).Thickness = 2
+
+-- Arrastar container (área maior)
+local arrastando = false
+local posicaoInicial
+
+container.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        arrastando = true
+        posicaoInicial = input.Position - container.AbsolutePosition
+        input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                arrastando = false
+            end
+        end)
     end
 end)
+
+UIS.InputChanged:Connect(function(input)
+    if arrastando and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
+        local delta = input.Position - posicaoInicial
+        container.Position = UDim2.new(0, delta.X, 0, delta.Y)
+    end
+end)
+
+-- Função para criar plataforma
+local function criarPlataforma()
+    local char = LP.Character
+    if not char then return end
+    local root = char:FindFirstChild("HumanoidRootPart")
+    if not root then return end
+
+    local plataforma = Instance.new("Part")
+    plataforma.Size = Vector3.new(5, 0.5, 5)
+    plataforma.Anchored = true
+    plataforma.CanCollide = true
+    plataforma.BrickColor = BrickColor.new("Deep purple")
+    plataforma.Material = Enum.Material.Neon
+    plataforma.Transparency = 0.2
+    plataforma.Position = root.Position - Vector3.new(0, 3, 0)
+    plataforma.Parent = WS
+
+    table.insert(plataformas, plataforma)
+    return plataforma
+end
+
+-- Loop de criação (ligado)
+local function loopSubir()
+    while ativo do
+        pcall(function()
+            criarPlataforma()
+            while #plataformas > MAX_PLATAFORMAS do
+                local plat = table.remove(plataformas, 1)
+                if plat and plat.Parent then
+                    plat:Destroy()
+                end
+                task.wait(0.001)
+            end
+        end)
+        task.wait(intervalo_criacao)
+    end
+end
+
+-- Botão ligar/desligar (toque no botão dentro do container)
+botao.MouseButton1Click:Connect(function()
+    ativo = not ativo
+    if ativo then
+        botao.Text = "SUBIR\nON"
+        botao.BackgroundColor3 = Color3.fromRGB(180, 0, 255)
+        task.spawn(loopSubir)
+    else
+        botao.Text = "SUBIR\nOFF"
+        botao.BackgroundColor3 = Color3.fromRGB(120, 0, 200)
+    end
+end)
+
+print("🟣 CRIADOR DE PLATAFORMAS MÁGICAS CARREGADO! (Área de arrasto expandida)")
