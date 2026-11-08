@@ -1,1 +1,278 @@
+-- // NYX HUB V3.3 - O PODER DA NOITE
+local UIS = game:GetService("UserInputService")
+local CoreGui = game:GetService("CoreGui")
 
+local NyxHub = Instance.new("ScreenGui", CoreGui)
+NyxHub.Name = "NyxHub_V3"
+
+local VERSAO_ATUAL = "3.3"
+
+-- KEY FRAME
+local KeyFrame = Instance.new("Frame", NyxHub)
+KeyFrame.Size = UDim2.new(0, 300, 0, 160)
+KeyFrame.Position = UDim2.new(0.5, -150, 0.5, -80)
+KeyFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
+KeyFrame.BorderSizePixel = 0
+KeyFrame.Visible = true
+Instance.new("UICorner", KeyFrame).CornerRadius = UDim.new(0, 10)
+Instance.new("UIStroke", KeyFrame).Color = Color3.fromRGB(100, 0, 255)
+Instance.new("UIStroke", KeyFrame).Thickness = 1.5
+
+local KeyTitle = Instance.new("TextLabel", KeyFrame)
+KeyTitle.Text = "🔐 DIGITE A KEY"
+KeyTitle.Size = UDim2.new(1, 0, 0, 30)
+KeyTitle.BackgroundTransparency = 1
+KeyTitle.TextColor3 = Color3.fromRGB(120, 0, 255)
+KeyTitle.Font = Enum.Font.GothamBold
+KeyTitle.TextSize = 16
+
+local KeyInput = Instance.new("TextBox", KeyFrame)
+KeyInput.Size = UDim2.new(1, -20, 0, 35)
+KeyInput.Position = UDim2.new(0, 10, 0, 40)
+KeyInput.BackgroundColor3 = Color3.fromRGB(10, 10, 12)
+KeyInput.TextColor3 = Color3.new(1,1,1)
+KeyInput.PlaceholderText = "Digite a senha..."
+KeyInput.Font = Enum.Font.SourceSans
+KeyInput.TextSize = 14
+Instance.new("UICorner", KeyInput)
+
+local KeyStatus = Instance.new("TextLabel", KeyFrame)
+KeyStatus.Size = UDim2.new(1, 0, 0, 20)
+KeyStatus.Position = UDim2.new(0, 0, 0, 80)
+KeyStatus.BackgroundTransparency = 1
+KeyStatus.TextColor3 = Color3.fromRGB(200, 200, 200)
+KeyStatus.Text = ""
+KeyStatus.Font = Enum.Font.SourceSans
+KeyStatus.TextSize = 12
+
+local KeyBtn = Instance.new("TextButton", KeyFrame)
+KeyBtn.Size = UDim2.new(1, -20, 0, 35)
+KeyBtn.Position = UDim2.new(0, 10, 0, 110)
+KeyBtn.BackgroundColor3 = Color3.fromRGB(100, 0, 255)
+KeyBtn.TextColor3 = Color3.new(1,1,1)
+KeyBtn.Text = "DESBLOQUEAR"
+KeyBtn.Font = Enum.Font.GothamBold
+KeyBtn.TextSize = 14
+Instance.new("UICorner", KeyBtn)
+
+-- BOLINHA
+local FloatingBtn = Instance.new("TextButton", NyxHub)
+FloatingBtn.Size = UDim2.new(0, 50, 0, 50)
+FloatingBtn.Position = UDim2.new(0.1, 0, 0.1, 0)
+FloatingBtn.BackgroundColor3 = Color3.fromRGB(80, 0, 200)
+FloatingBtn.Text = "N"
+FloatingBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+FloatingBtn.TextSize = 24
+FloatingBtn.Visible = false
+Instance.new("UICorner", FloatingBtn).CornerRadius = UDim.new(1, 0)
+
+-- JANELA PRINCIPAL
+local Main = Instance.new("Frame", NyxHub)
+Main.Size = UDim2.new(0, 420, 0, 410)
+Main.Position = UDim2.new(0.5, -210, 0.5, -205)
+Main.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
+Main.BorderSizePixel = 0
+Main.Visible = false
+Instance.new("UICorner", Main).CornerRadius = UDim.new(0, 10)
+Instance.new("UIStroke", Main).Color = Color3.fromRGB(100, 0, 255)
+
+local Title = Instance.new("TextLabel", Main)
+Title.Text = "🌑 NYX HUB V3"
+Title.Size = UDim2.new(1, 0, 0, 35)
+Title.BackgroundTransparency = 1
+Title.TextColor3 = Color3.fromRGB(120, 0, 255)
+Title.Font = Enum.Font.GothamBold
+Title.TextSize = 18
+
+-- ABAS
+local TabFrame = Instance.new("Frame", Main)
+TabFrame.Size = UDim2.new(1, 0, 0, 30)
+TabFrame.Position = UDim2.new(0, 0, 0, 35)
+TabFrame.BackgroundTransparency = 1
+
+local AbaEditor = Instance.new("TextButton", TabFrame)
+AbaEditor.Size = UDim2.new(0.33, -4, 1, 0)
+AbaEditor.Text = "📝 EDITOR"
+AbaEditor.BackgroundColor3 = Color3.fromRGB(100, 0, 255)
+AbaEditor.TextColor3 = Color3.fromRGB(255, 255, 255)
+AbaEditor.Font = Enum.Font.GothamBold
+Instance.new("UICorner", AbaEditor).CornerRadius = UDim.new(0, 6)
+
+local AbaScripts = Instance.new("TextButton", TabFrame)
+AbaScripts.Size = UDim2.new(0.33, -4, 1, 0)
+AbaScripts.Position = UDim2.new(0.33, 2, 0, 0)
+AbaScripts.Text = "📦 SCRIPTS"
+AbaScripts.BackgroundColor3 = Color3.fromRGB(40, 40, 45)
+AbaScripts.TextColor3 = Color3.fromRGB(255, 255, 255)
+AbaScripts.Font = Enum.Font.GothamBold
+Instance.new("UICorner", AbaScripts).CornerRadius = UDim.new(0, 6)
+
+local AbaCreditos = Instance.new("TextButton", TabFrame)
+AbaCreditos.Size = UDim2.new(0.34, -4, 1, 0)
+AbaCreditos.Position = UDim2.new(0.66, 2, 0, 0)
+AbaCreditos.Text = "🏆 CRÉDITOS"
+AbaCreditos.BackgroundColor3 = Color3.fromRGB(40, 40, 45)
+AbaCreditos.TextColor3 = Color3.fromRGB(255, 255, 255)
+AbaCreditos.Font = Enum.Font.GothamBold
+Instance.new("UICorner", AbaCreditos).CornerRadius = UDim.new(0, 6)
+
+local EditorFrame = Instance.new("Frame", Main)
+EditorFrame.Size = UDim2.new(1, 0, 1, -100)
+EditorFrame.Position = UDim2.new(0, 0, 0, 65)
+EditorFrame.BackgroundTransparency = 1
+EditorFrame.Visible = true
+
+local ScriptsFrame = Instance.new("Frame", Main)
+ScriptsFrame.Size = UDim2.new(1, 0, 1, -100)
+ScriptsFrame.Position = UDim2.new(0, 0, 0, 65)
+ScriptsFrame.BackgroundTransparency = 1
+ScriptsFrame.Visible = false
+
+local CreditosFrame = Instance.new("Frame", Main)
+CreditosFrame.Size = UDim2.new(1, 0, 1, -100)
+CreditosFrame.Position = UDim2.new(0, 0, 0, 65)
+CreditosFrame.BackgroundTransparency = 1
+CreditosFrame.Visible = false
+
+-- EDITOR
+local Editor = Instance.new("TextBox", EditorFrame)
+Editor.Size = UDim2.new(1, 0, 0, 200)
+Editor.BackgroundColor3 = Color3.fromRGB(10, 10, 12)
+Editor.Text = "-- Insira seu script aqui..."
+Editor.TextColor3 = Color3.fromRGB(255, 255, 255)
+Editor.MultiLine = true
+Editor.ClearTextOnFocus = false
+Editor.TextXAlignment = Enum.TextXAlignment.Left
+Editor.TextYAlignment = Enum.TextYAlignment.Top
+Instance.new("UICorner", Editor)
+
+local ExecuteBtn = Instance.new("TextButton", EditorFrame)
+ExecuteBtn.Size = UDim2.new(0, 195, 0, 35)
+ExecuteBtn.Position = UDim2.new(0, 0, 0, 210)
+ExecuteBtn.BackgroundColor3 = Color3.fromRGB(100, 0, 255)
+ExecuteBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+ExecuteBtn.Text = "EXECUTAR"
+ExecuteBtn.Font = Enum.Font.GothamBold
+Instance.new("UICorner", ExecuteBtn)
+
+local ClearBtn = Instance.new("TextButton", EditorFrame)
+ClearBtn.Size = UDim2.new(0, 195, 0, 35)
+ClearBtn.Position = UDim2.new(1, -195, 0, 210)
+ClearBtn.BackgroundColor3 = Color3.fromRGB(40, 40, 45)
+ClearBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+ClearBtn.Text = "LIMPAR"
+ClearBtn.Font = Enum.Font.GothamBold
+Instance.new("UICorner", ClearBtn)
+
+ExecuteBtn.MouseButton1Click:Connect(function()
+    local s, e = pcall(function() loadstring(Editor.Text)() end)
+    if not s then warn(e) end
+end)
+ClearBtn.MouseButton1Click:Connect(function() Editor.Text = "" end)
+
+-- SCRIPT LIST (NOVO REPOSITÓRIO)
+local baseURL = "https://raw.githubusercontent.com/eliezerwanderson-ux/Executo-NYX-jdidh-as-wneodnddibddj/main/"
+
+local scriptsProntos = {
+    {nome = "👁️ Mestre da Visão", arquivo = "mestre_da_visao.lua"},
+    {nome = "🧱 Wall Jumper + Gravidade", arquivo = "wall_jumper.lua"},
+    {nome = "🔵 Hitbox Azul", arquivo = "hitbox_azul.lua"},
+    {nome = "🥊 Puxar Players", arquivo = "puxar_players.lua"},
+    {nome = "⚙️ Configurações Elite V015", arquivo = "config_elite.lua"},
+    -- Os outros você adiciona aqui depois:
+    -- {nome = "🔍 Teleporte Fantasma", arquivo = "teleporte_fantasma.lua"},
+    -- {nome = "🎯 Elite Hub V38", arquivo = "elite_hub_aim.lua"},
+}
+
+local ScriptsScroll = Instance.new("ScrollingFrame", ScriptsFrame)
+ScriptsScroll.Size = UDim2.new(1, 0, 1, 0)
+ScriptsScroll.BackgroundTransparency = 1
+ScriptsScroll.ScrollBarThickness = 6
+local ScriptsLayout = Instance.new("UIListLayout", ScriptsScroll)
+ScriptsLayout.Padding = UDim.new(0, 5)
+
+for _, script in ipairs(scriptsProntos) do
+    local btn = Instance.new("TextButton", ScriptsScroll)
+    btn.Size = UDim2.new(1, -10, 0, 40)
+    btn.BackgroundColor3 = Color3.fromRGB(40, 40, 45)
+    btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    btn.Text = script.nome
+    btn.Font = Enum.Font.GothamBold
+    btn.TextSize = 13
+    Instance.new("UICorner", btn).CornerRadius = UDim.new(0, 6)
+    
+    btn.MouseButton1Click:Connect(function()
+        local url = baseURL .. script.arquivo
+        local success, err = pcall(function() loadstring(game:HttpGet(url))() end)
+        if not success then warn("Erro: " .. err) else print("✅ " .. script.nome) end
+    end)
+end
+ScriptsScroll.CanvasSize = UDim2.new(0, 0, 0, #scriptsProntos * 45 + 10)
+
+-- CRÉDITOS
+local CreditosScroll = Instance.new("ScrollingFrame", CreditosFrame)
+CreditosScroll.Size = UDim2.new(1, 0, 1, 0)
+CreditosScroll.BackgroundTransparency = 1
+local CreditosLabel = Instance.new("TextLabel", CreditosScroll)
+CreditosLabel.Size = UDim2.new(1, -10, 0, 500)
+CreditosLabel.Position = UDim2.new(0, 5, 0, 5)
+CreditosLabel.BackgroundTransparency = 1
+CreditosLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+CreditosLabel.Text = "🌑 NYX HUB V3\nO Poder da Noite\n\nDesenvolvedor: sombra015\n\nSalve, família!\nValeu demais por estarem usando o Nyx.\n\n▶️ YouTube: @sombra015br"
+CreditosLabel.Font = Enum.Font.SourceSans
+CreditosLabel.TextSize = 14
+CreditosLabel.TextXAlignment = Enum.TextXAlignment.Left
+CreditosLabel.TextYAlignment = Enum.TextYAlignment.Top
+CreditosLabel.TextWrapped = true
+
+-- ALTERNAR ABAS
+AbaEditor.MouseButton1Click:Connect(function() EditorFrame.Visible = true; ScriptsFrame.Visible = false; CreditosFrame.Visible = false; AbaEditor.BackgroundColor3 = Color3.fromRGB(100, 0, 255); AbaScripts.BackgroundColor3 = Color3.fromRGB(40, 40, 45); AbaCreditos.BackgroundColor3 = Color3.fromRGB(40, 40, 45) end)
+AbaScripts.MouseButton1Click:Connect(function() EditorFrame.Visible = false; ScriptsFrame.Visible = true; CreditosFrame.Visible = false; AbaEditor.BackgroundColor3 = Color3.fromRGB(40, 40, 45); AbaScripts.BackgroundColor3 = Color3.fromRGB(100, 0, 255); AbaCreditos.BackgroundColor3 = Color3.fromRGB(40, 40, 45) end)
+AbaCreditos.MouseButton1Click:Connect(function() EditorFrame.Visible = false; ScriptsFrame.Visible = false; CreditosFrame.Visible = true; AbaEditor.BackgroundColor3 = Color3.fromRGB(40, 40, 45); AbaScripts.BackgroundColor3 = Color3.fromRGB(40, 40, 45); AbaCreditos.BackgroundColor3 = Color3.fromRGB(100, 0, 255) end)
+
+-- KEY VERIFICATION
+local function verificarKey()
+    if KeyInput.Text == "sombra015" then
+        KeyFrame.Visible = false
+        Main.Visible = true
+        print("✅ Senha correta! Nyx Hub liberado.")
+    else
+        KeyStatus.Text = "❌ Senha incorreta!"
+        KeyStatus.TextColor3 = Color3.fromRGB(255, 50, 50)
+    end
+end
+KeyBtn.MouseButton1Click:Connect(verificarKey)
+KeyInput.FocusLost:Connect(function(enter) if enter then verificarKey() end end)
+
+-- FECHAR (X)
+local CloseBtn = Instance.new("TextButton", Main)
+CloseBtn.Size = UDim2.new(0, 30, 0, 30)
+CloseBtn.Position = UDim2.new(1, -35, 0, 5)
+CloseBtn.Text = "X"
+CloseBtn.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+CloseBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+Instance.new("UICorner", CloseBtn)
+CloseBtn.MouseButton1Click:Connect(function() Main.Visible = false; FloatingBtn.Visible = true end)
+FloatingBtn.MouseButton1Click:Connect(function() Main.Visible = true; FloatingBtn.Visible = false end)
+
+-- ARRASTAR
+local function MakeDraggable(obj)
+    local dragging, dragStart, startPos
+    obj.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+            dragging = true; dragStart = input.Position; startPos = obj.Position
+        end
+    end)
+    UIS.InputChanged:Connect(function(input)
+        if dragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
+            local delta = input.Position - dragStart
+            obj.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+        end
+    end)
+    UIS.InputEnded:Connect(function(input) dragging = false end)
+end
+MakeDraggable(KeyFrame)
+MakeDraggable(Main)
+MakeDraggable(FloatingBtn)
+
+print("🌑 NYX HUB V3.3 (NOVO REPOSITÓRIO) CARREGADO!")
