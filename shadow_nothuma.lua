@@ -1,11 +1,11 @@
--- // NYX HUB V4.0 - O PODER DA NOITE (19 SCRIPTS)
+-- // NYX HUB V3.9 - O PODER DA NOITE (ORDEM ORIGINAL)
 local UIS = game:GetService("UserInputService")
 local CoreGui = game:GetService("CoreGui")
 
 local NyxHub = Instance.new("ScreenGui", CoreGui)
-NyxHub.Name = "NyxHub_V4"
+NyxHub.Name = "NyxHub_V3"
 
-local VERSAO_ATUAL = "4.0"
+local VERSAO_ATUAL = "3.9"
 
 -- KEY FRAME
 local KeyFrame = Instance.new("Frame", NyxHub)
@@ -77,7 +77,7 @@ Instance.new("UICorner", Main).CornerRadius = UDim.new(0, 10)
 Instance.new("UIStroke", Main).Color = Color3.fromRGB(100, 0, 255)
 
 local Title = Instance.new("TextLabel", Main)
-Title.Text = "🌑 NYX HUB V4.0"
+Title.Text = "🌑 NYX HUB V3"
 Title.Size = UDim2.new(1, 0, 0, 35)
 Title.BackgroundTransparency = 1
 Title.TextColor3 = Color3.fromRGB(120, 0, 255)
@@ -170,29 +170,29 @@ ExecuteBtn.MouseButton1Click:Connect(function()
 end)
 ClearBtn.MouseButton1Click:Connect(function() Editor.Text = "" end)
 
--- SCRIPT LIST (NOVO REPOSITÓRIO - 19 SCRIPTS)
+-- SCRIPT LIST (ORDEM ORIGINAL E COM TODOS OS 19)
 local baseURL = "https://raw.githubusercontent.com/eliezerwanderson-ux/Executo-NYX-jdidh-as-wneodnddibddj/main/"
 
 local scriptsProntos = {
-    {nome = "👁️ Mestre da Visão", arquivo = "mestre_da_visao.lua"},
-    {nome = "🧱 Wall Jumper + Gravidade", arquivo = "wall_jumper.lua"},
-    {nome = "🔵 Hitbox Azul", arquivo = "hitbox_azul.lua"},
-    {nome = "🥊 Puxar Players", arquivo = "puxar_players.lua"},
-    {nome = "⚙️ Configurações Elite V015", arquivo = "config_elite.lua"},
     {nome = "🔍 Teleporte Fantasma", arquivo = "teleporte_fantasma.lua"},
-    {nome = "🔨 ADMIN HAMMER V2", arquivo = "admin_hammer.lua"},
-    {nome = "🟣 Plataformas Mágicas", arquivo = "plataformas_magicas.lua"},
+    {nome = "🥊 Hitbox Puller", arquivo = "hitbox_puller.lua"},
+    {nome = "📡 V015 Farejador de Sinais", arquivo = "farejador_sinais.lua"},
+    {nome = "⚙️ Configurações Elite V015", arquivo = "config_elite.lua"},
     {nome = "👻 Soul Mobile Premium", arquivo = "soul_mobile.lua"},
-    {nome = "🎯 ELITE HUB V38 ULTRA", arquivo = "elite_hub_aim.lua"},
     {nome = "🎯 Sombra V015 Ultimato", arquivo = "sombra_ultimato.lua"},
     {nome = "💥 V015 Premium Ultra", arquivo = "premium_ultra.lua"},
+    {nome = "🔨 ADMIN HAMMER V2", arquivo = "admin_hammer.lua"},
     {nome = "🌀 Infinite Yield", arquivo = "infinite_yield.lua"},
     {nome = "📜 SHipRoX Script", arquivo = "shiprox.lua"},
     {nome = "🍈 Redz Hub (Blox Fruits)", arquivo = "redz_hub.lua"},
+    {nome = "🟣 Plataformas Mágicas", arquivo = "plataformas_magicas.lua"},
     {nome = "🌲 Voidware (99 Nights)", arquivo = "voidware_99nights.lua"},
     {nome = "🧠 Chill Hub (Roube um Braiot)", arquivo = "chill_hub.lua"},
     {nome = "🔄 Server Hopper", arquivo = "server_hopper.lua"},
-    {nome = "🏷️ Criador de Títulos", arquivo = "criador_titulos.lua"}
+    {nome = "👁️ Mestre da Visão", arquivo = "mestre_da_visao.lua"},
+    {nome = "🎯 ELITE HUB V38 ULTRA", arquivo = "elite_hub_aim.lua"},
+    {nome = "🏷️ Criador de Títulos", arquivo = "criador_titulos.lua"},
+    {nome = "🧱 Wall Jumper + Gravidade", arquivo = "wall_jumper.lua"}
 }
 
 local ScriptsScroll = Instance.new("ScrollingFrame", ScriptsFrame)
@@ -220,7 +220,7 @@ for _, script in ipairs(scriptsProntos) do
 end
 ScriptsScroll.CanvasSize = UDim2.new(0, 0, 0, #scriptsProntos * 45 + 10)
 
--- CRÉDITOS
+-- CRÉDITOS (EXATAMENTE COMO VOCÊ APROVOU)
 local CreditosScroll = Instance.new("ScrollingFrame", CreditosFrame)
 CreditosScroll.Size = UDim2.new(1, 0, 1, 0)
 CreditosScroll.BackgroundTransparency = 1
@@ -229,7 +229,20 @@ CreditosLabel.Size = UDim2.new(1, -10, 0, 500)
 CreditosLabel.Position = UDim2.new(0, 5, 0, 5)
 CreditosLabel.BackgroundTransparency = 1
 CreditosLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-CreditosLabel.Text = "🌑 NYX HUB V4.0\nO Poder da Noite\n\nDesenvolvedor: sombra015\n\nSalve, família!\nValeu demais por estarem usando o Nyx.\n\n▶️ YouTube: @sombra015br"
+CreditosLabel.Text = [[🎬 Créditos do Executor
+Desenvolvedor: sombra015
+
+Salve, família!
+Valeu demais por estarem usando o executor. Cada teste que faço me ajuda a trazer escapes novos e mais ajustes pra vocês.
+
+Toda atualização mexe um pouquinho na parte dos scripts — é lá que vou adicionando scripts novos conforme vou testando e aprovando.
+
+Se quiserem acompanhar de perto o que muda, se inscreve lá no canal:
+▶️ YouTube: @sombra015br
+É por lá que eu mostro as atualizações, explico as novidades e deixo vocês por dentro de tudo antes de sair.
+
+Obrigado pela força e bora juntos! 🔥
+]]
 CreditosLabel.Font = Enum.Font.SourceSans
 CreditosLabel.TextSize = 14
 CreditosLabel.TextXAlignment = Enum.TextXAlignment.Left
@@ -286,4 +299,4 @@ MakeDraggable(KeyFrame)
 MakeDraggable(Main)
 MakeDraggable(FloatingBtn)
 
-print("🌑 NYX HUB V4.0 CARREGADO!")
+print("🌑 NYX HUB V3.9 CARREGADO!")
