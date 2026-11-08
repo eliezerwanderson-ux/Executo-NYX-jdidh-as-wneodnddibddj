@@ -1,4 +1,4 @@
--- // MESTRE DA VISÃO V2 - ESP ESQUELETO (R6 + R15) + BARRA DE VIDA
+-- // MESTRE DA VISÃO V3 - ESP + VIDA + TELEPORTE ALEATÓRIO
 local Players = game:GetService("Players")
 local LP = Players.LocalPlayer
 local UIS = game:GetService("UserInputService")
@@ -16,13 +16,13 @@ local cfg = {
     grosuraLinha = 1.5
 }
 
--- Interface
+-- Interface (Aumentada para caber o novo botão)
 local gui = Instance.new("ScreenGui", game:GetService("CoreGui"))
 gui.Name = "MestreDaVisao"
 
 local main = Instance.new("Frame", gui)
-main.Size = UDim2.new(0, 240, 0, 140)
-main.Position = UDim2.new(0.5, -120, 0.4, -70)
+main.Size = UDim2.new(0, 240, 0, 185)
+main.Position = UDim2.new(0.5, -120, 0.4, -92)
 main.BackgroundColor3 = cfg.corFundo
 main.BorderSizePixel = 0
 main.Active = true
@@ -40,6 +40,7 @@ title.Font = Enum.Font.GothamBold
 title.TextSize = 14
 title.TextXAlignment = Enum.TextXAlignment.Left
 
+-- Botão X (Minimizar)
 local closeBtn = Instance.new("TextButton", main)
 closeBtn.Size = UDim2.new(0, 28, 0, 28)
 closeBtn.Position = UDim2.new(1, -32, 0, 4)
@@ -50,6 +51,7 @@ closeBtn.Font = Enum.Font.GothamBold
 closeBtn.TextSize = 14
 Instance.new("UICorner", closeBtn).CornerRadius = UDim.new(1, 0)
 
+-- Botão ESP
 local espBtn = Instance.new("TextButton", main)
 espBtn.Size = UDim2.new(1, -20, 0, 32)
 espBtn.Position = UDim2.new(0, 10, 0, 45)
@@ -60,6 +62,7 @@ espBtn.Font = Enum.Font.GothamBold
 espBtn.TextSize = 12
 Instance.new("UICorner", espBtn).CornerRadius = UDim.new(0, 6)
 
+-- Botão Barra de Vida
 local hpBtn = Instance.new("TextButton", main)
 hpBtn.Size = UDim2.new(1, -20, 0, 32)
 hpBtn.Position = UDim2.new(0, 10, 0, 85)
@@ -70,6 +73,18 @@ hpBtn.Font = Enum.Font.GothamBold
 hpBtn.TextSize = 12
 Instance.new("UICorner", hpBtn).CornerRadius = UDim.new(0, 6)
 
+-- 🎲 NOVO BOTÃO: TELEPORTE ALEATÓRIO
+local tpBtn = Instance.new("TextButton", main)
+tpBtn.Size = UDim2.new(1, -20, 0, 32)
+tpBtn.Position = UDim2.new(0, 10, 0, 125)
+tpBtn.BackgroundColor3 = Color3.fromRGB(150, 0, 200)
+tpBtn.TextColor3 = cfg.corTexto
+tpBtn.Text = "🎲 TELEPORTE ALEATÓRIO"
+tpBtn.Font = Enum.Font.GothamBold
+tpBtn.TextSize = 12
+Instance.new("UICorner", tpBtn).CornerRadius = UDim.new(0, 6)
+
+-- Bolinha Arrastável (Quando clica no X)
 local bolinha = Instance.new("TextButton", gui)
 bolinha.Size = UDim2.new(0, 44, 0, 44)
 bolinha.Position = UDim2.new(0, 10, 0.1, 0)
@@ -97,7 +112,31 @@ hpBtn.MouseButton1Click:Connect(function()
     hpBtn.BackgroundColor3 = cfg.barraVidaAtiva and Color3.fromRGB(0, 150, 0) or Color3.fromRGB(150, 0, 0)
 end)
 
--- Minimizar / Restaurar
+-- Lógica do Teleporte Aleatório
+tpBtn.MouseButton1Click:Connect(function()
+    local validPlayers = {}
+    -- Filtra jogadores válidos (vivos e com personagem)
+    for _, p in pairs(Players:GetPlayers()) do
+        if p ~= LP and p.Character and p.Character:FindFirstChild("HumanoidRootPart") and p.Character:FindFirstChild("Humanoid") and p.Character.Humanoid.Health > 0 then
+            table.insert(validPlayers, p)
+        end
+    end
+
+    -- Se achou alguém, teleporta
+    if #validPlayers > 0 then
+        local target = validPlayers[math.random(1, #validPlayers)]
+        local meuChar = LP.Character
+        if meuChar and meuChar:FindFirstChild("HumanoidRootPart") then
+            -- Teleporta para a frente da pessoa escolhida
+            meuChar.HumanoidRootPart.CFrame = target.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, 3)
+            print("🎲 Teleportado aleatoriamente para: " .. target.DisplayName)
+        end
+    else
+        print("❌ Nenhum jogador válido encontrado para teleportar.")
+    end
+end)
+
+-- Minimizar / Restaurar (X e Bolinha)
 closeBtn.MouseButton1Click:Connect(function()
     main.Visible = false
     bolinha.Visible = true
@@ -107,7 +146,7 @@ bolinha.MouseButton1Click:Connect(function()
     bolinha.Visible = false
 end)
 
--- Arrastar painel e bolinha
+-- Sistema de Arrastar para o Menu e para a Bolinha
 local function makeDraggable(obj)
     local dragging, dragStart, startPos
     obj.InputBegan:Connect(function(input)
@@ -127,80 +166,45 @@ makeDraggable(main)
 makeDraggable(bolinha)
 
 -- ================================
--- SISTEMA DE ESQUELETO FLEXÍVEL
+-- SISTEMA DE ESQUELETO FLEXÍVEL (R6 + R15)
 -- ================================
--- Conexões para R15
 local R15_CONEXOES = {
-    {"Head", "UpperTorso"},
-    {"UpperTorso", "LowerTorso"},
-    {"UpperTorso", "LeftUpperArm"},
-    {"LeftUpperArm", "LeftLowerArm"},
-    {"LeftLowerArm", "LeftHand"},
-    {"UpperTorso", "RightUpperArm"},
-    {"RightUpperArm", "RightLowerArm"},
-    {"RightLowerArm", "RightHand"},
-    {"LowerTorso", "LeftUpperLeg"},
-    {"LeftUpperLeg", "LeftLowerLeg"},
-    {"LeftLowerLeg", "LeftFoot"},
-    {"LowerTorso", "RightUpperLeg"},
-    {"RightUpperLeg", "RightLowerLeg"},
-    {"RightLowerLeg", "RightFoot"}
+    {"Head", "UpperTorso"}, {"UpperTorso", "LowerTorso"}, {"UpperTorso", "LeftUpperArm"}, {"LeftUpperArm", "LeftLowerArm"},
+    {"LeftLowerArm", "LeftHand"}, {"UpperTorso", "RightUpperArm"}, {"RightUpperArm", "RightLowerArm"}, {"RightLowerArm", "RightHand"},
+    {"LowerTorso", "LeftUpperLeg"}, {"LeftUpperLeg", "LeftLowerLeg"}, {"LeftLowerLeg", "LeftFoot"}, {"LowerTorso", "RightUpperLeg"},
+    {"RightUpperLeg", "RightLowerLeg"}, {"RightLowerLeg", "RightFoot"}
 }
 
--- Conexões para R6
 local R6_CONEXOES = {
-    {"Head", "Torso"},
-    {"Torso", "Left Arm"},
-    {"Torso", "Right Arm"},
-    {"Torso", "Left Leg"},
-    {"Torso", "Right Leg"}
+    {"Head", "Torso"}, {"Torso", "Left Arm"}, {"Torso", "Right Arm"}, {"Torso", "Left Leg"}, {"Torso", "Right Leg"}
 }
 
--- Determina o tipo de corpo e retorna as conexões correspondentes
 local function obterConexoes(char)
-    if char:FindFirstChild("UpperTorso") then
-        return R15_CONEXOES
-    elseif char:FindFirstChild("Torso") then
-        return R6_CONEXOES
-    else
-        return nil
-    end
+    if char:FindFirstChild("UpperTorso") then return R15_CONEXOES
+    elseif char:FindFirstChild("Torso") then return R6_CONEXOES
+    else return nil end
 end
 
--- Pools de desenho
 local function criarLinha()
-    local d = Drawing.new("Line")
-    d.Visible = false
-    d.Color = cfg.corEsqueleto
-    d.Thickness = cfg.grosuraLinha
-    return d
+    local d = Drawing.new("Line"); d.Visible = false; d.Color = cfg.corEsqueleto; d.Thickness = cfg.grosuraLinha; return d
 end
 
 local function criarBarraVida()
-    local fundo = Drawing.new("Square")
-    fundo.Visible = false; fundo.Color = Color3.fromRGB(0,0,0); fundo.Filled = true; fundo.Thickness = 1
-    local preenchimento = Drawing.new("Square")
-    preenchimento.Visible = false; preenchimento.Color = Color3.fromRGB(0,255,0); preenchimento.Filled = true
-    local borda = Drawing.new("Square")
-    borda.Visible = false; borda.Color = cfg.corBorda; borda.Thickness = 1; borda.Filled = false
-    local texto = Drawing.new("Text")
-    texto.Visible = false; texto.Color = cfg.corTexto; texto.Size = 12; texto.Center = true
+    local fundo = Drawing.new("Square"); fundo.Visible = false; fundo.Color = Color3.fromRGB(0,0,0); fundo.Filled = true; fundo.Thickness = 1
+    local preenchimento = Drawing.new("Square"); preenchimento.Visible = false; preenchimento.Color = Color3.fromRGB(0,255,0); preenchimento.Filled = true
+    local borda = Drawing.new("Square"); borda.Visible = false; borda.Color = cfg.corBorda; borda.Thickness = 1; borda.Filled = false
+    local texto = Drawing.new("Text"); texto.Visible = false; texto.Color = cfg.corTexto; texto.Size = 12; texto.Center = true
     return {fundo = fundo, preenchimento = preenchimento, borda = borda, texto = texto}
 end
 
 local MAX_JOGADORES = 30
 local MAX_LINHAS_POR_JOGADOR = 14
 local poolLinhas = {}
-for _ = 1, MAX_JOGADORES * MAX_LINHAS_POR_JOGADOR do
-    table.insert(poolLinhas, criarLinha())
-end
-
+for _ = 1, MAX_JOGADORES * MAX_LINHAS_POR_JOGADOR do table.insert(poolLinhas, criarLinha()) end
 local poolBarras = {}
-for _ = 1, MAX_JOGADORES do
-    table.insert(poolBarras, criarBarraVida())
-end
+for _ = 1, MAX_JOGADORES do table.insert(poolBarras, criarBarraVida()) end
 
--- Loop principal
+-- Loop Principal de Desenho
 RunService.RenderStepped:Connect(function()
     local idxLinha = 1
     local idxBarra = 1
@@ -213,7 +217,7 @@ RunService.RenderStepped:Connect(function()
         local head = char:FindFirstChild("Head")
         if not (humanoid and head and humanoid.Health > 0) then continue end
 
-        -- ESP Esqueleto
+        -- ESP
         if cfg.espAtivo then
             local conexoes = obterConexoes(char)
             if conexoes then
@@ -242,9 +246,7 @@ RunService.RenderStepped:Connect(function()
             local pos, vis = Camera:WorldToViewportPoint(head.Position + Vector3.new(0, 2.5, 0))
             local barra = poolBarras[idxBarra]
             if vis then
-                local maxHealth = humanoid.MaxHealth
-                local health = humanoid.Health
-                local ratio = health / maxHealth
+                local ratio = humanoid.Health / humanoid.MaxHealth
                 local width = 80
                 local height = 6
                 local x = pos.X - width/2
@@ -278,7 +280,7 @@ RunService.RenderStepped:Connect(function()
         end
     end
 
-    -- Esconder objetos não utilizados
+    -- Limpa desenhos não utilizados
     for i = idxLinha, #poolLinhas do poolLinhas[i].Visible = false end
     for i = idxBarra, #poolBarras do
         poolBarras[i].fundo.Visible = false
@@ -288,4 +290,4 @@ RunService.RenderStepped:Connect(function()
     end
 end)
 
-print("🌑 MESTRE DA VISÃO V2 CARREGADO! (Suporta R6 e R15)")
+print("🌑 MESTRE DA VISÃO V3 CARREGADO! (ESP + TELEPORTE ALEATÓRIO)")
