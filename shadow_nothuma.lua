@@ -77,7 +77,7 @@ Instance.new("UICorner", Main).CornerRadius = UDim.new(0, 10)
 Instance.new("UIStroke", Main).Color = Color3.fromRGB(100, 0, 255)
 
 local Title = Instance.new("TextLabel", Main)
-Title.Text = "🌑 NYX HUB V3"
+Title.Text = "🌑 NYX HUB V3.9"
 Title.Size = UDim2.new(1, 0, 0, 35)
 Title.BackgroundTransparency = 1
 Title.TextColor3 = Color3.fromRGB(120, 0, 255)
@@ -175,7 +175,7 @@ local baseURL = "https://raw.githubusercontent.com/eliezerwanderson-ux/Executo-N
 
 local scriptsProntos = {
     {nome = "🔍 Teleporte Fantasma", arquivo = "teleporte_fantasma.lua"},
-    {nome = "🥊 Hitbox Puller", arquivo = "hitbox_puller.lua"},
+    {nome = "🥊 Puxar Players", arquivo = "puxar_players.lua"},
     {nome = "📡 V015 Farejador de Sinais", arquivo = "farejador_sinais.lua"},
     {nome = "⚙️ Configurações Elite V015", arquivo = "config_elite.lua"},
     {nome = "👻 Soul Mobile Premium", arquivo = "soul_mobile.lua"},
@@ -192,7 +192,8 @@ local scriptsProntos = {
     {nome = "👁️ Mestre da Visão", arquivo = "mestre_da_visao.lua"},
     {nome = "🎯 ELITE HUB V38 ULTRA", arquivo = "elite_hub_aim.lua"},
     {nome = "🏷️ Criador de Títulos", arquivo = "criador_titulos.lua"},
-    {nome = "🧱 Wall Jumper + Gravidade", arquivo = "wall_jumper.lua"}
+    {nome = "🧱 Wall Jumper + Gravidade", arquivo = "wall_jumper.lua"},
+    {nome = "🔵 Hitbox Azul", arquivo = "hitbox_azul.lua"}
 }
 
 local ScriptsScroll = Instance.new("ScrollingFrame", ScriptsFrame)
